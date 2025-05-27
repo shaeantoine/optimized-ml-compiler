@@ -1,0 +1,10 @@
+# Hashes of file build rules.
+8b425a13d67c4ec55c463e0ba099927e third_party/onnx/CMakeFiles/gen_onnx_data_proto
+8b425a13d67c4ec55c463e0ba099927e third_party/onnx/CMakeFiles/gen_onnx_operators_proto
+8b425a13d67c4ec55c463e0ba099927e third_party/onnx/CMakeFiles/gen_onnx_proto
+4c98e03d151ecd25e4540f21b6459ff5 third_party/onnx/onnx/onnx-data.pb.cc
+36701535876872f0fa59b659aa10362c third_party/onnx/onnx/onnx-data.proto
+1e7646a31b5a4da93048a424aaf16c61 third_party/onnx/onnx/onnx-ml.pb.cc
+dcbc8d2e2b2905cc3f07b66f8ba63372 third_party/onnx/onnx/onnx-ml.proto
+17982fba9af02f02a0d3ca3c79808946 third_party/onnx/onnx/onnx-operators-ml.pb.cc
+2ade23075acc3ec1b192538ef0b97247 third_party/onnx/onnx/onnx-operators-ml.proto
