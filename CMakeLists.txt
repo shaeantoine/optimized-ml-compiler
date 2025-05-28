@@ -14,7 +14,7 @@ include_directories(
     third_party/onnx
 )
 
-add_executable(opty main.cpp)
+add_executable(opty main.cpp ir.cpp)
 
 # Link against ONNX and Protobuf
 target_link_libraries(opty

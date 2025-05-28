@@ -1,3 +1,5 @@
+#include "ir.hpp"
+#include "onnx_to_ir.hpp"
 #include <onnx/onnx_pb.h>
 #include <fstream>
 #include <iostream>
@@ -9,17 +11,14 @@ int main() {
         std::cerr << "Failed to load ONNX model.\n";
         return 1;
     }
-    std::cout << "Model loaded! IR version: " << model.ir_version() << "\n";
 
-    const onnx::GraphProto& graph = model.graph();
+    IRGraph ir = parse_onnx_model(model);
 
-    for (const auto& node : graph.node()) {
-        std::cout << "Op: " << node.op_type() << "\n";
-        for (const auto& input : node.input())
-            std::cout << "  Input: " << input << "\n";
-        for (const auto& output : node.output())
-            std::cout << "  Output: " << output << "\n";
-    }    
+    std::cout << "Parsed IR nodes:\n";
+    for (const auto& pair : ir.nodes) {
+        const IRNode& node = pair.second;
+        std::cout << "- " << node.name << " (" << node.op_type << ")\n";
+    }
 
     return 0;
 }

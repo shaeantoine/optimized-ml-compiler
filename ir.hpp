@@ -2,7 +2,6 @@
 #define IR_HPP
 
 #include <string>
-#include <iostream>
 #include <vector>
 #include <unordered_map>
 
@@ -12,11 +11,11 @@ struct IRNode {
     std::vector<std::string> inputs;
     std::vector<std::string> outputs;
 
+    IRNode();
     IRNode(const std::string& name,
            const std::string& op_type,
            const std::vector<std::string>& inputs,
-           const std::vector<std::string>& outputs)
-        : name(name), op_type(op_type), inputs(inputs), outputs(outputs) {}
+           const std::vector<std::string>& outputs);
 };
 
 struct IRGraph {

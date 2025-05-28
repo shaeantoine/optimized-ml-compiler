@@ -239,6 +239,30 @@ onnx/fast:
 	$(MAKE) $(MAKESILENT) -f third_party/onnx/CMakeFiles/onnx.dir/build.make third_party/onnx/CMakeFiles/onnx.dir/build
 .PHONY : onnx/fast
 
+ir.o: ir.cpp.o
+.PHONY : ir.o
+
+# target to build an object file
+ir.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/opty.dir/build.make CMakeFiles/opty.dir/ir.cpp.o
+.PHONY : ir.cpp.o
+
+ir.i: ir.cpp.i
+.PHONY : ir.i
+
+# target to preprocess a source file
+ir.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/opty.dir/build.make CMakeFiles/opty.dir/ir.cpp.i
+.PHONY : ir.cpp.i
+
+ir.s: ir.cpp.s
+.PHONY : ir.s
+
+# target to generate assembly for a file
+ir.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/opty.dir/build.make CMakeFiles/opty.dir/ir.cpp.s
+.PHONY : ir.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -281,6 +305,9 @@ help:
 	@echo "... onnx"
 	@echo "... onnx_proto"
 	@echo "... opty"
+	@echo "... ir.o"
+	@echo "... ir.i"
+	@echo "... ir.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
