@@ -19,3 +19,10 @@ struct IRNode {
         : name(name), op_type(op_type), inputs(inputs), outputs(outputs) {}
 };
 
+struct IRGraph {
+    std::unordered_map<std::string, IRNode> nodes;
+
+    void add_node(const IRNode& node);
+};
+
+#endif
