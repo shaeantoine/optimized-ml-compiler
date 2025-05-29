@@ -32,4 +32,21 @@
 *.app
 *.onnx
 
+# Build artifacts 
 /build/
+*.o
+*.obj
+*.exe
+*.out
+*.log
+*.a
+*.so
+*.dylib
+*.dll
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# Ignore ONNX and other downloads
+/third_party/

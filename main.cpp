@@ -6,7 +6,7 @@
 
 int main() {
     onnx::ModelProto model;
-    std::ifstream input("gptneox_Opset16.onnx", std::ios::binary);
+    std::ifstream input("../model/gptneox_Opset16.onnx", std::ios::binary);
     if (!model.ParseFromIstream(&input)) {
         std::cerr << "Failed to load ONNX model.\n";
         return 1;

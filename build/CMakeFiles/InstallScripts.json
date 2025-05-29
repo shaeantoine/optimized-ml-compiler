@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/Users/shaemckenna1/Programs/opty/build/cmake_install.cmake",
-		"/Users/shaemckenna1/Programs/opty/build/third_party/onnx/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
