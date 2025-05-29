@@ -18,10 +18,16 @@ This repo will utilize a number of example ONNX ML model files to test it's infr
 This project depends on ONNX and by extension Protobuf (and others). In order to run Opty you'll have to configure these dependencies on your machine. The following guide should take you through whats necessary for a smooth build process. 
 
 ### Building ONNX
-Fortunately ONNX configures Protobuf for us so you'll only need to worry about configuring ONNX. This repo comes with an empty directory for it's dependencies "./third_party". You'll need to populate this directory using the following commands:
+Fortunately ONNX configures Protobuf for us so you'll only need to worry about configuring ONNX. However, you WILL need to install protobuf as a global OS package. THe can be done with the following command using Homebrew on MacOS:
 
 ```bash
-cd third_party
+brew install protobuf
+```
+
+This repo comes with an empty directory for it's dependencies "./third_party". You'll need to populate this directory using the following commands:
+
+```bash
+mkdir third_party && cd third_party
 git submodule add https://github.com/onnx/onnx.git
 cd onnx
 git submodule update --init --recursive
