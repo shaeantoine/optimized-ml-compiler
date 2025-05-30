@@ -6,8 +6,7 @@ The purpose of this repo is to really understand how models run. In university I
 
 ### Example ONNX File 
 
-This repo is compatible with any ONNX file. You may find any number of interesting ML ONNX models on [ONNX's Model Github](https://github.com/onnx/models). Currently the repo assumes a model is stored within the directory opty/model. For the purposes of development and testing I've used "gptneox_Opset16.onnx" which you may find more information about [here](https://github.com/EleutherAI/gpt-neox)
-.
+This repo is compatible with any ONNX file. You may find any number of interesting ML ONNX models on [ONNX's Model Github](https://github.com/onnx/models). Currently the repo assumes a model is stored within the directory opty/model. For the purposes of development and testing I've used "gptneox_Opset16.onnx" which you may find more information about [here](https://github.com/EleutherAI/gpt-neox).
 
 ## Setup 
 

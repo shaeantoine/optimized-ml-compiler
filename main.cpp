@@ -1,6 +1,7 @@
 #include "ir.hpp"
 #include "onnx_to_ir.hpp"
 #include "context.hpp"
+#include "execution_context.hpp"
 #include "tensor.hpp"
 #include <onnx/onnx_pb.h>
 #include <fstream>
@@ -26,6 +27,13 @@ int main() {
     Tensor t({1.0, 2.0, 3.0, 4.0}, {2, 2});
     std::cout << "Tensor size: " << t.size() << std::endl;
     std::cout << "First element: " << t[0] << std::endl;
+
+    ExecutionContext ctx;
+    ctx.set_tensor("input1", Tensor({10.0, 20.0}, {2}));
+
+    if (ctx.has_tensor("input1")) {
+        std::cout << "input1[0] = " << ctx.get_tensor("input1")[0] << std::endl;
+    }
 
     return 0;
 }

@@ -17,7 +17,8 @@ include_directories(
 add_executable(opty 
                main.cpp
                ir.cpp
-               tensor.cpp)
+               tensor.cpp
+               execution_context.cpp)
 
 # Link against ONNX and Protobuf
 target_link_libraries(opty
