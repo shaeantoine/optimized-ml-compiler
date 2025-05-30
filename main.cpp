@@ -1,8 +1,11 @@
 #include "ir.hpp"
 #include "onnx_to_ir.hpp"
+#include "context.hpp"
+#include "tensor.hpp"
 #include <onnx/onnx_pb.h>
 #include <fstream>
 #include <iostream>
+
 
 int main() {
     onnx::ModelProto model;
@@ -19,6 +22,10 @@ int main() {
         const IRNode& node = pair.second;
         std::cout << "- " << node.name << " (" << node.op_type << ")\n";
     }
+
+    Tensor t({1.0, 2.0, 3.0, 4.0}, {2, 2});
+    std::cout << "Tensor size: " << t.size() << std::endl;
+    std::cout << "First element: " << t[0] << std::endl;
 
     return 0;
 }
