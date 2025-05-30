@@ -7,18 +7,25 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(Protobuf REQUIRED)
 
 # Add ONNX subdirectory (assumes ONNX is a git submodule)
-add_subdirectory(third_party/onnx)
+add_subdirectory(third_party/onnx
+                 src/operations)
 
 include_directories(
     ${Protobuf_INCLUDE_DIRS}
     third_party/onnx
 )
 
+target_subdirectories(opty PRIVATE
+                      operator_registry.cpp
+                      operations/add.cpp)
+
 add_executable(opty 
                main.cpp
                ir.cpp
                tensor.cpp
                execution_context.cpp)
+
+
 
 # Link against ONNX and Protobuf
 target_link_libraries(opty
