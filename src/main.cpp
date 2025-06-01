@@ -1,12 +1,27 @@
-#include "ir.hpp"
-#include "onnx_to_ir.hpp"
-#include "context.hpp"
-#include "execution_context.hpp"
-#include "tensor.hpp"
+#include "../include/execution_context.hpp"
+#include "../include/operator_registry.hpp"
+#include "../include/onnx_to_ir.hpp"
+#include "../include/operator.hpp"
+#include "../include/tensor.hpp"
+#include "../include/ir.hpp"
+
+#include "../include/operations/add.hpp"
+#include "../include/operations/relu.hpp"
+#include "../include/operations/matmul.hpp"
+#include "../include/operations/sigmoid.hpp"
+
 #include <onnx/onnx_pb.h>
 #include <fstream>
 #include <iostream>
 
+// Testing Adding two tensors
+void evaluate_graph(const IRGraph& graph, ExecutionContext& context) {
+    for (const auto& pair : graph.nodes) {
+        const auto& node = pair.second;
+        auto op = OperatorRegistry::instance().create_operator(node.op_type);
+        op->compute(node, context);
+    }
+}
 
 int main() {
     onnx::ModelProto model;
@@ -38,16 +53,7 @@ int main() {
     }
 
     // Testing simple evaluation task
-    evaluate_graph(graph, context);
+    evaluate_graph(ir, ctx);
 
     return 0;
-}
-
-// Testing Adding two tensors
-void evaluate_graph(const IRGraph& graph, ExecutionContext& context) {
-    for (const auto& pair : graph.nodes) {
-        const auto& node = pair.second;
-        auto op = OperatorRegistry::instance().create_operator(node.op_type);
-        op->compute(node, context);
-    }
 }

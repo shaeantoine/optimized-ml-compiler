@@ -50,3 +50,5 @@ cmake_install.cmake
 
 # Ignore ONNX and other downloads
 /third_party/
+
+.DS_Store

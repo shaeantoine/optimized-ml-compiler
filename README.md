@@ -40,5 +40,5 @@ make -j$(nproc)
 Then you can run the program via:
 
 ```bash
-./opty
+./src/opty
 ```

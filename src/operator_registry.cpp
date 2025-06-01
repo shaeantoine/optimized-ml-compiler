@@ -1,4 +1,4 @@
-#include "operator_registry.hpp"
+#include "../include/operator_registry.hpp"
 #include <stdexcept>
 
 OperatorRegistry& OperatorRegistry::instance() {
