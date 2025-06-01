@@ -15,9 +15,9 @@ include_directories(
     third_party/onnx
 )
 
-target_subdirectories(opty PRIVATE
-                      operator_registry.cpp
-                      operations/add.cpp)
+target_sources(opty PRIVATE
+               operator_registry.cpp
+               operations/add.cpp)
 
 add_executable(opty 
                main.cpp

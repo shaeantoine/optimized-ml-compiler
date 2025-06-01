@@ -24,10 +24,12 @@ int main() {
         std::cout << "- " << node.name << " (" << node.op_type << ")\n";
     }
 
+    // Testing registering tensors
     Tensor t({1.0, 2.0, 3.0, 4.0}, {2, 2});
     std::cout << "Tensor size: " << t.size() << std::endl;
     std::cout << "First element: " << t[0] << std::endl;
 
+    // Testing execution context
     ExecutionContext ctx;
     ctx.set_tensor("input1", Tensor({10.0, 20.0}, {2}));
 
@@ -35,5 +37,17 @@ int main() {
         std::cout << "input1[0] = " << ctx.get_tensor("input1")[0] << std::endl;
     }
 
+    // Testing simple evaluation task
+    evaluate_graph(graph, context);
+
     return 0;
+}
+
+// Testing Adding two tensors
+void evaluate_graph(const IRGraph& graph, ExecutionContext& context) {
+    for (const auto& pair : graph.nodes) {
+        const auto& node = pair.second;
+        auto op = OperatorRegistry::instance().create_operator(node.op_type);
+        op->compute(node, context);
+    }
 }
