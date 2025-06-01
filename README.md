@@ -4,6 +4,45 @@
 
 The purpose of this repo is to really understand how models run. In university I learnt how to build ML models and how to evaluate said models but I have no idea how a computer actually runs them. This repo is setup to create a model compuiler with the intention of (1) learning how running a model actually works and (2) ways to make this runtime compiler more efficient. 
 
+## Repo Structure 
+
+```bash
+opty/
+├── src/
+│   ├── operations/
+│   │    ├── add.cpp
+│   │    ├── matmul.cpp
+│   │    ├── relu.cpp
+│   │    ├── sigmoid.cpp
+│   │    └── CMakeLists.txt
+│   ├── CMakeLists.txt
+│   ├── execution_context.cpp
+│   ├── operator_registry.cpp
+│   ├── tensor.cpp
+│   ├── ir.cpp
+│   ├── main.cpp # Where the app is run from 
+├── include/
+│   ├── operations/
+│   │    ├── add.hpp
+│   │    ├── matmul.hpp
+│   │    ├── relu.hpp
+│   │    └── sigmoid.hpp
+│   ├── execution_context.hpp
+│   ├── operator_registry.hpp
+│   ├── onnx_to_ir.hpp
+│   ├── operator.hpp
+│   ├── tensor.hpp
+│   └── ir.hpp
+├── third_party/
+│   └── onnx/
+├── CMakeLists.txt
+├── .gitmodules
+├── .gitignore
+├── LICENSE
+├── SYSTEMDESIGN.md
+└── README.md
+```
+
 ### Example ONNX File 
 
 This repo is compatible with any ONNX file. You may find any number of interesting ML ONNX models on [ONNX's Model Github](https://github.com/onnx/models). Currently the repo assumes a model is stored within the directory opty/model. For the purposes of development and testing I've used "gptneox_Opset16.onnx" which you may find more information about [here](https://github.com/EleutherAI/gpt-neox).
