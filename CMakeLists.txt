@@ -17,7 +17,10 @@ include_directories(
 
 target_sources(opty PRIVATE
                operator_registry.cpp
-               operations/add.cpp)
+               operations/add.cpp
+               operations/matmul.cpp
+               operations/sigmoid.cpp
+               operations/relu.cpp)
 
 add_executable(opty 
                main.cpp
