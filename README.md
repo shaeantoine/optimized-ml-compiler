@@ -33,8 +33,6 @@ opty/
 │   ├── operator.hpp
 │   ├── tensor.hpp
 │   └── ir.hpp
-├── third_party/
-│   └── onnx/
 ├── CMakeLists.txt
 ├── .gitmodules
 ├── .gitignore
