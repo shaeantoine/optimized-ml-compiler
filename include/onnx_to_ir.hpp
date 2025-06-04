@@ -18,6 +18,12 @@ IRGraph parse_onnx_model(const onnx::ModelProto& model) {
         std::vector<std::string> outputs(node.output().begin(), node.output().end());
 
         IRNode ir_node(name, op_type, inputs, outputs);
+
+        // Gather node attributes
+        for (const auto& attr : node.attribute()) {
+            ir_node.attributes[attr.name()] = attr;
+        }
+
         graph.add_node(ir_node);
     }
 

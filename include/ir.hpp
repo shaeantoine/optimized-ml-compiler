@@ -1,15 +1,18 @@
 #ifndef IR_HPP 
 #define IR_HPP
 
+#include <map>
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <onnx/onnx_pb.h>
 
 struct IRNode {
     std::string name;
     std::string op_type;
     std::vector<std::string> inputs;
     std::vector<std::string> outputs;
+    std::map<std::string, onnx::AttributeProto> attributes;
 
     IRNode();
     IRNode(const std::string& name,

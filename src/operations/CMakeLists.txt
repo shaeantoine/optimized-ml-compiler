@@ -3,7 +3,7 @@ target_sources(opty PRIVATE
     relu.cpp
     conv.cpp
     matmul.cpp
-    #concat.cpp
+    concat.cpp
     softmax.cpp
     sigmoid.cpp
     maxpool.cpp
