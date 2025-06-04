@@ -5,4 +5,5 @@ target_sources(opty PRIVATE
     softmax.cpp
     sigmoid.cpp
     maxpool.cpp
+    globalaveragepool.cpp
 )
