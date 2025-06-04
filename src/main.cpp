@@ -8,6 +8,7 @@
 #include "../include/operations/add.hpp"
 #include "../include/operations/relu.hpp"
 #include "../include/operations/matmul.hpp"
+#include "../include/operations/maxpool.hpp"
 #include "../include/operations/softmax.hpp"
 #include "../include/operations/sigmoid.hpp"
 
@@ -41,17 +42,17 @@ int main() {
     }
 
     // Testing registering tensors
-    Tensor t({1.0, 2.0, 3.0, 4.0}, {2, 2});
-    std::cout << "Tensor size: " << t.size() << std::endl;
-    std::cout << "First element: " << t[0] << std::endl;
+    // Tensor t({1.0, 2.0, 3.0, 4.0}, {2, 2});
+    // std::cout << "Tensor size: " << t.size() << std::endl;
+    // std::cout << "First element: " << t[0] << std::endl;
 
     // Testing execution context
-    ExecutionContext ctx;
-    ctx.set_tensor("input1", Tensor({10.0, 20.0}, {2}));
+    // ExecutionContext ctx;
+    // ctx.set_tensor("input1", Tensor({10.0, 20.0}, {2}));
 
-    if (ctx.has_tensor("input1")) {
-        std::cout << "input1[0] = " << ctx.get_tensor("input1")[0] << std::endl;
-    }
+    // if (ctx.has_tensor("input1")) {
+    //     std::cout << "input1[0] = " << ctx.get_tensor("input1")[0] << std::endl;
+    // }
 
     // Testing simple evaluation task
     evaluate_graph(ir, ctx);

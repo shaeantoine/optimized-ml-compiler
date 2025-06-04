@@ -4,4 +4,5 @@ target_sources(opty PRIVATE
     matmul.cpp
     softmax.cpp
     sigmoid.cpp
+    maxpool.cpp
 )
