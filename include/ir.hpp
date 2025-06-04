@@ -23,8 +23,11 @@ struct IRNode {
 
 struct IRGraph {
     std::unordered_map<std::string, IRNode> nodes;
+    std::vector<std::string> node_order;
 
     void add_node(const IRNode& node);
+
+    const IRNode& get_node(const std::string& name) const;
 };
 
 #endif

@@ -10,4 +10,9 @@ IRNode::IRNode(const std::string& name,
 
 void IRGraph::add_node(const IRNode& node) {
     nodes[node.name] = node;
+    node_order.push_back(node.name);
+}
+
+const IRNode& IRGraph::get_node(const std::string& name) const {
+    return nodes.at(name);
 }
