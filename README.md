@@ -60,7 +60,7 @@ This repo comes with an empty directory for it's dependencies "./third_party". Y
 
 ```bash
 mkdir third_party && cd third_party
-git submodule add https://github.com/onnx/onnx.git
+git submodule add -f https://github.com/onnx/onnx.git
 cd onnx
 git submodule update --init --recursive
 ```
