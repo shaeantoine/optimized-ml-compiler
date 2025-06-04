@@ -26,6 +26,8 @@ void evaluate_graph(const IRGraph& graph, ExecutionContext& context) {
 }
 
 int main() {
+
+    // === Load input ONNX file ===
     onnx::ModelProto model;
     std::ifstream input("../model/squeezenet1.0-3.onnx", std::ios::binary);
     if (!model.ParseFromIstream(&input)) {
@@ -33,6 +35,7 @@ int main() {
         return 1;
     }
 
+    // === Create input graph ===
     IRGraph ir = parse_onnx_model(model);
 
     std::cout << "Parsed IR nodes:\n";
@@ -41,20 +44,37 @@ int main() {
         std::cout << "- " << node.name << " (" << node.op_type << ")\n";
     }
 
-    // Testing registering tensors
-    // Tensor t({1.0, 2.0, 3.0, 4.0}, {2, 2});
-    // std::cout << "Tensor size: " << t.size() << std::endl;
-    // std::cout << "First element: " << t[0] << std::endl;
+    // === Create and populate input tensors ===
+    ExecutionContext ctx;
 
-    // Testing execution context
-    // ExecutionContext ctx;
-    // ctx.set_tensor("input1", Tensor({10.0, 20.0}, {2}));
+    const auto& onnx_graph = model.graph();
+    for (const auto& input_tensor : onnx_graph.input()) {
+        const std::string& name = input_tensor.name();
+        const auto& tensor_type = input_tensor.type().tensor_type();
+        const auto& shape_proto = tensor_type.shape();
 
-    // if (ctx.has_tensor("input1")) {
-    //     std::cout << "input1[0] = " << ctx.get_tensor("input1")[0] << std::endl;
-    // }
+        std::vector<int64_t> shape;
+        int size = 1;
+        for (const auto& dim : shape_proto.dim()) {
+            int dim_size = dim.has_dim_value() ? dim.dim_value() : 1;
+            shape.push_back(dim_size);
+            size *= dim_size;
+        }
 
-    // Testing simple evaluation task
+        // Fill input with dummy data (e.g., all 1.0f)
+        std::vector<float> data(size, 1.0f);
+        Tensor context_tensor(data, shape);
+        ctx.set_tensor(name, context_tensor);
+
+        std::cout << "Set input tensor: " << name << " [";
+        for (size_t i = 0; i < shape.size(); ++i) {
+            std::cout << shape[i];
+            if (i < shape.size() - 1) std::cout << ", ";
+        }
+        std::cout << "]\n";
+    }
+
+    // Running graph and tensors 
     evaluate_graph(ir, ctx);
 
     return 0;

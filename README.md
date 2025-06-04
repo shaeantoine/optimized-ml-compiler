@@ -20,7 +20,7 @@ opty/
 │   ├── operator_registry.cpp
 │   ├── tensor.cpp
 │   ├── ir.cpp
-│   ├── main.cpp # Where the app is run from 
+│   ├── main.cpp                # Where the app is run from 
 ├── include/
 │   ├── operations/
 │   │    ├── add.hpp
