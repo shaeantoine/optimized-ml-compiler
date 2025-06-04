@@ -51,7 +51,7 @@ void MaxpoolOperator::compute(const IRNode& node, ExecutionContext& context) {
 }
 
 static bool registered = [] {
-    OperatorRegistry::instance().register_operator("Maxpool", [] {
+    OperatorRegistry::instance().register_operator("MaxPool", [] {
         return std::make_unique<MaxpoolOperator>();
     });
     return true;

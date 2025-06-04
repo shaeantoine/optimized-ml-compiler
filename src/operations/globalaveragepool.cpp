@@ -37,7 +37,7 @@ void GlobalaveragepoolOperator::compute(const IRNode& node, ExecutionContext& co
 }
 
 static bool registered = [] {
-    OperatorRegistry::instance().register_operator("Globalaveragepool", [] {
+    OperatorRegistry::instance().register_operator("GlobalAveragePool", [] {
         return std::make_unique<GlobalaveragepoolOperator>();
     });
     return true;
