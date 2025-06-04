@@ -65,7 +65,7 @@ int main() {
         Tensor context_tensor(data, shape);
         ctx.set_tensor(name, context_tensor);
 
-        std::cout << "Set input tensor: " << name << " [";
+        std::cout << "Set input tensor: " << name << ", Shape: [";
         for (size_t i = 0; i < shape.size(); ++i) {
             std::cout << shape[i];
             if (i < shape.size() - 1) std::cout << ", ";
