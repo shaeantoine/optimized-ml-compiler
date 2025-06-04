@@ -43,12 +43,6 @@ int main() {
     // === Create input graph ===
     IRGraph ir = parse_onnx_model(model);
 
-    std::cout << "Parsed IR nodes:\n";
-    for (const auto& pair : ir.nodes) {
-        const IRNode& node = pair.second;
-        std::cout << "- " << node.name << " (" << node.op_type << ")\n";
-    }
-
     // === Create and populate input tensors ===
     ExecutionContext ctx;
 
