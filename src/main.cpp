@@ -10,6 +10,7 @@
 #include "../include/operations/conv.hpp"
 #include "../include/operations/matmul.hpp"
 #include "../include/operations/concat.hpp"
+#include "../include/operations/dropout.hpp"
 #include "../include/operations/maxpool.hpp"
 #include "../include/operations/softmax.hpp"
 #include "../include/operations/sigmoid.hpp"
@@ -19,14 +20,6 @@
 #include <fstream>
 #include <iostream>
 
-// Running the ONNX model graph 
-// void evaluate_graph(const IRGraph& graph, ExecutionContext& context) {
-//     for (const auto& pair : graph.nodes) {
-//         const auto& node = pair.second;
-//         auto op = OperatorRegistry::instance().create_operator(node.op_type);
-//         op->compute(node, context);
-//     }
-// }
 
 void evaluate_graph(const IRGraph& graph, ExecutionContext& context) {
     for (const std::string& node_name : graph.node_order) {

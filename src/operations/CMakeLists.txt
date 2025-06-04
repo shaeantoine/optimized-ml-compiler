@@ -4,6 +4,7 @@ target_sources(opty PRIVATE
     conv.cpp
     matmul.cpp
     concat.cpp
+    dropout.cpp
     softmax.cpp
     sigmoid.cpp
     maxpool.cpp
