@@ -19,8 +19,22 @@ void ConvOperator::compute(const IRNode& node, ExecutionContext& context) {
         throw std::runtime_error("Conv: input channels do not match");
     }
 
-    int out_H = H - kH + 1;
-    int out_W = W - kW + 1;
+    // Parse attributes
+    int stride_h = 1, stride_w = 1;
+    if (node.attributes.count("strides")) {
+        stride_h = node.attributes.at("strides").ints(0);
+        stride_w = node.attributes.at("strides").ints(1);
+    }
+
+    int pad_h = 0, pad_w = 0;
+    if (node.attributes.count("pads")) {
+        pad_h = node.attributes.at("pads").ints(0); // pads = [pad_top, pad_left, pad_bottom, pad_right]
+        pad_w = node.attributes.at("pads").ints(1);
+    }
+
+    // Compute output dimensions
+    int out_H = (H + 2 * pad_h - kH) / stride_h + 1;
+    int out_W = (W + 2 * pad_w - kW) / stride_w + 1;
     std::vector<float> output_data(N * C_out * out_H * out_W, 0.0f);
 
     for (int n = 0; n < N; ++n) {
@@ -31,11 +45,13 @@ void ConvOperator::compute(const IRNode& node, ExecutionContext& context) {
                     for (int ci = 0; ci < C_in; ++ci) {
                         for (int kh = 0; kh < kH; ++kh) {
                             for (int kw = 0; kw < kW; ++kw) {
-                                int h_in = ho + kh;
-                                int w_in = wo + kw;
-                                int in_idx = ((n * C_in + ci) * H + h_in) * W + w_in;
-                                int w_idx = ((co * C_in + ci) * kH + kh) * kW + kw;
-                                sum += input.data[in_idx] * weights.data[w_idx];
+                                int h_in = ho * stride_h - pad_h + kh;
+                                int w_in = wo * stride_w - pad_w + kw;
+                                if (h_in >= 0 && h_in < H && w_in >= 0 && w_in < W) {
+                                    int in_idx = ((n * C_in + ci) * H + h_in) * W + w_in;
+                                    int w_idx = ((co * C_in + ci) * kH + kh) * kW + kw;
+                                    sum += input.data[in_idx] * weights.data[w_idx];
+                                }
                             }
                         }
                     }
@@ -45,6 +61,20 @@ void ConvOperator::compute(const IRNode& node, ExecutionContext& context) {
             }
         }
     }
+
+    if (node.inputs.size() == 3) {
+        const auto& bias = context.get_tensor(node.inputs[2]); // [C_out]
+        for (int n = 0; n < N; ++n) {
+            for (int co = 0; co < C_out; ++co) {
+                for (int ho = 0; ho < out_H; ++ho) {
+                    for (int wo = 0; wo < out_W; ++wo) {
+                        int out_idx = ((n * C_out + co) * out_H + ho) * out_W + wo;
+                        output_data[out_idx] += bias.data[co];
+                    }
+                }
+            }
+        }
+    }    
 
     context.set_tensor(node.outputs[0], Tensor(output_data, {N, C_out, out_H, out_W}));
 }
