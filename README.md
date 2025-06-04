@@ -1,4 +1,4 @@
-# opty: An ONNX ML Model Compiler
+# Opty: An ONNX ML Model Compiler
 
 ## Purpose of this Repo
 

@@ -8,6 +8,7 @@
 #include "../include/operations/add.hpp"
 #include "../include/operations/relu.hpp"
 #include "../include/operations/matmul.hpp"
+#include "../include/operations/softmax.hpp"
 #include "../include/operations/sigmoid.hpp"
 
 #include <onnx/onnx_pb.h>
@@ -25,7 +26,7 @@ void evaluate_graph(const IRGraph& graph, ExecutionContext& context) {
 
 int main() {
     onnx::ModelProto model;
-    std::ifstream input("../model/gptneox_Opset16.onnx", std::ios::binary);
+    std::ifstream input("../model/squeezenet1.0-3.onnx", std::ios::binary);
     if (!model.ParseFromIstream(&input)) {
         std::cerr << "Failed to load ONNX model.\n";
         return 1;
