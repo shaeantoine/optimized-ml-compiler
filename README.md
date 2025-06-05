@@ -14,18 +14,30 @@ opty/
 │   │    ├── matmul.cpp
 │   │    ├── relu.cpp
 │   │    ├── sigmoid.cpp
+│   │    ├── dropout.cpp
+│   │    ├── concat.cpp
+│   │    ├── conv.cpp
+│   │    ├── maxpool.cpp
+│   │    ├── softmax.cpp
+│   │    ├── globalaveragepool.cpp
 │   │    └── CMakeLists.txt
 │   ├── CMakeLists.txt
 │   ├── execution_context.cpp
 │   ├── operator_registry.cpp
 │   ├── tensor.cpp
 │   ├── ir.cpp
-│   ├── main.cpp                # Where the app is run from 
+│   ├── main.cpp                # Where the Model Graph is run from 
 ├── include/
 │   ├── operations/
 │   │    ├── add.hpp
 │   │    ├── matmul.hpp
 │   │    ├── relu.hpp
+│   │    ├── dropout.hpp
+│   │    ├── concat.hpp
+│   │    ├── conv.hpp
+│   │    ├── maxpool.hpp
+│   │    ├── softmax.hpp
+│   │    ├── globalaveragepool.hpp
 │   │    └── sigmoid.hpp
 │   ├── execution_context.hpp
 │   ├── operator_registry.hpp
@@ -43,7 +55,7 @@ opty/
 
 ### Example ONNX File 
 
-This repo is compatible with any ONNX file. You may find any number of interesting ML ONNX models on [ONNX's Model Github](https://github.com/onnx/models). Currently the repo assumes a model is stored within the directory opty/model. For the purposes of development and testing I've used "gptneox_Opset16.onnx" which you may find more information about [here](https://github.com/EleutherAI/gpt-neox).
+This repo is compatible with any ONNX file. You may find any number of interesting ML ONNX models on [ONNX's Model Github](https://github.com/onnx/models). Currently the repo assumes a model is stored within the directory opty/model. For the purposes of development and testing I've used "squeezenet1.0-3.onnx" which you may find more information about [here](https://github.com/forresti/SqueezeNet).
 
 ## Setup 
 
