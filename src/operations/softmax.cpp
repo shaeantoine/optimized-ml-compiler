@@ -1,47 +1,73 @@
 #include "operations/softmax.hpp"
 #include "operator_registry.hpp"
+#include <iostream>
 #include <cmath>
 
 void SoftmaxOperator::compute(const IRNode& node, ExecutionContext& context) {
     const auto& input = context.get_tensor(node.inputs[0]);
-    //std::vector<float> result;
+    const auto& in_shape = input.shape;
 
-
-    if (input.shape.size() != 2) {
-        throw std::runtime_error("Softmax: Only 2D tensors supported (batch_size, num_classes)");
-    }
-
-    size_t batch_size = input.shape[0];
-    size_t num_classes = input.shape[1];
-
-    std::vector<float> result(input.data.size());
-
-    for (size_t i = 0; i < batch_size; ++i) {
-        float max_val = -std::numeric_limits<float>::infinity();
-
-        // Find max for numerical stability
-        for (size_t j = 0; j < num_classes; ++j) {
-            max_val = std::max(max_val, input.data[i * num_classes + j]);
-        }
-
-        float sum = 0.0f;
-
-        // Compute exponentials and sum
-        for (size_t j = 0; j < num_classes; ++j) {
-            float val = std::exp(input.data[i * num_classes + j] - max_val);
-            result[i * num_classes + j] = val;
-            sum += val;
-        }
-
-        // Normalize
-        for (size_t j = 0; j < num_classes; ++j) {
-            result[i * num_classes + j] /= sum;
-        }
-    }
+    // Debug statements
+    std::cout << "SoftmaxOperator::compute()\n";
+    std::cout << " - Input shape: ";
+    for (auto d : input.shape) std::cout << d << " ";
+    std::cout << "\n";
     
 
-    Tensor out(result, input.shape);
-    context.set_tensor(node.outputs[0], out);
+    // Accept 4D inputs shaped like [N, C, 1, 1] — flatten them to [N, C]
+    if (in_shape.size() == 4 && in_shape[2] == 1 && in_shape[3] == 1) {
+        int N = in_shape[0];
+        int C = in_shape[1];
+        std::vector<float> output_data(N * C);
+        for (int n = 0; n < N; ++n) {
+            float max_val = -std::numeric_limits<float>::infinity();
+            for (int c = 0; c < C; ++c) {
+                int idx = ((n * C + c) * 1 + 0) * 1 + 0;
+                max_val = std::max(max_val, input.data[idx]);
+            }
+
+            float sum_exp = 0.0f;
+            for (int c = 0; c < C; ++c) {
+                int idx = ((n * C + c) * 1 + 0) * 1 + 0;
+                sum_exp += std::exp(input.data[idx] - max_val);
+            }
+
+            for (int c = 0; c < C; ++c) {
+                int idx = ((n * C + c) * 1 + 0) * 1 + 0;
+                output_data[n * C + c] = std::exp(input.data[idx] - max_val) / sum_exp;
+            }
+        }
+
+        context.set_tensor(node.outputs[0], Tensor(output_data, {N, C}));
+        return;
+    }
+
+    
+    if (in_shape.size() != 2) {
+        throw std::runtime_error("Softmax: Only 2D tensors or [N, C, 1, 1] supported");
+    }
+
+    int N = in_shape[0];
+    int C = in_shape[1];
+    std::vector<float> output_data(N * C);
+
+    for (int n = 0; n < N; ++n) {
+        float max_val = -std::numeric_limits<float>::infinity();
+        for (int c = 0; c < C; ++c) {
+            max_val = std::max(max_val, input.data[n * C + c]);
+        }
+
+        float sum_exp = 0.0f;
+        for (int c = 0; c < C; ++c) {
+            sum_exp += std::exp(input.data[n * C + c] - max_val);
+        }
+
+        for (int c = 0; c < C; ++c) {
+            output_data[n * C + c] = std::exp(input.data[n * C + c] - max_val) / sum_exp;
+        }
+    }
+
+    context.set_tensor(node.outputs[0], Tensor(output_data, {N, C}));
 }
 
 static bool registered = [] {
